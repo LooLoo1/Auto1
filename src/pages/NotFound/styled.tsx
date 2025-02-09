@@ -17,7 +17,6 @@ export const ParagraphStyled = styled(Typography)({
   fontWeight: "medium"
 })
 
-
 export const LinkStyled = styled(Link)(({theme}) => ({
   color: theme.palette.primary.main,
   textDecoration: "none"

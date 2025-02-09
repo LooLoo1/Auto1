@@ -1,35 +1,56 @@
 import { Car } from '../types';
-import { Card, CardContent, Typography, CardMedia, Button, Box } from '@mui/material';
+import { Card, CardContent, Typography, CardMedia, styled } from '@mui/material';
 import { Link } from 'react-router-dom';
 
 type CarItemProps = {
   car: Car;
 }
 
-export const CarItem = ({ car }: CarItemProps) => {
+const CardStyled = styled(Card)({
+  display: 'flex',
+  flexDirection: 'row',
+  gap: "20px",
+  padding: 2,
+  boxShadow: "none"
+});
+
+const CardContentStyled = styled(CardContent)({
+  flexGrow: 1,
+  padding: 0,
+  "&:last-child": {
+    paddingBottom: 0
+  }
+});
+
+const LinkStyled = styled(Link)(({theme}) => ({
+  color: theme.palette.primary.main,
+  textDecoration: "none",
+  "&:hover": {
+    textDecoration: "underline"
+  }
+}))
+
+export const CarItem = ({ car: {stockNumber, mileage, fuelType, color, pictureUrl, manufacturerName, modelName} }: CarItemProps) => {
   return (
-    <Card sx={{ display: 'flex', flexDirection: 'row', p: 2, mb: 2, border: '1px solid #ddd' }}>
+    <CardStyled>
       <CardMedia
         component="img"
-        image={car.pictureUrl}
-        alt={`${car.manufacturerName} ${car.modelName}`}
-        sx={{ width: 200, height: "auto", objectFit: 'cover' }}
+        image={pictureUrl}
+        alt={`${manufacturerName} ${modelName}`}
+        sx={{ width: 200, height: 100, objectFit: 'cover' }}
       />
-      <CardContent sx={{ flexGrow: 1 }}>
-        <Typography variant="h6" component="div" gutterBottom>
-          {car.manufacturerName} {car.modelName}
+      <CardContentStyled>
+        <Typography variant="h6" component="div" gutterBottom fontWeight={"bold"}>
+          {manufacturerName} {modelName}
         </Typography>
-        <Box sx={{ display: "flex" }}>
-          <Typography variant="body2" color="text.secondary">
-            Stock # {car.stockNumber} - {car.mileage.number.toLocaleString()} {car.mileage.unit} - {car.fuelType} - {car.color}
-          </Typography>
-        </Box>
-        <Box sx={{ px: 2, pb: 2 }}>
-          <Button size="small" component={Link} to={`/car/${car.stockNumber}`} variant="outlined" fullWidth>
-            View Details
-          </Button>
-        </Box>
-      </CardContent> 
-    </Card>
+        <Typography variant="body2" gutterBottom color="text.secondary">
+          Stock # {stockNumber} - {mileage.number.toLocaleString()} {mileage.unit} - {fuelType} - {color}
+        </Typography>
+        <LinkStyled to={`/cars/${stockNumber}`}>
+          View Details
+        </LinkStyled>
+
+      </CardContentStyled> 
+    </CardStyled>
   );
 };

@@ -1,8 +1,9 @@
-import { CircularProgress, FormControl, MenuItem, Select, SelectChangeEvent, Typography } from "@mui/material";
+import { useState } from "react";
+import { FormControl, MenuItem, Select, SelectChangeEvent, Typography } from "@mui/material";
 import { useFetchColors } from "hooks/useFetchColors";
 import { useFetchManufacturers } from "hooks/useFetchManufacturers";
 import { Filters } from "types";
-import { BoxStyled, ButtonStyled, SelectStyled } from "./styled";
+import { BoxStyled, ButtonStyled } from "./styled";
 
 type FilterProps = {
   filters: Filters;
@@ -16,28 +17,33 @@ export const Filter = ({ filters, onFilterChange }: FilterProps) => {
   const manufacturerOptions = ["All manufacturers", ...manufacturers.map((m) => m.name)];
   const colorOptions = ["All car colors", ...colors];
 
+  const [localFilters, setLocalFilters] = useState(filters);
+
   const handleManufacturerChange = (event: SelectChangeEvent<string>) => {
-    onFilterChange({
+    setLocalFilters((prev) => ({
+      ...prev,
       manufacturer: event.target.value === "All manufacturers" ? "" : event.target.value,
-      color: filters.color,
-    });
+    }));
   };
 
   const handleColorChange = (event: SelectChangeEvent<string>) => {
-    onFilterChange({
-      manufacturer: filters.manufacturer,
+    setLocalFilters((prev) => ({
+      ...prev,
       color: event.target.value === "All car colors" ? "" : event.target.value,
-    });
+    }));
   };
 
-  if (colorsLoading || manufacturersLoading) return <CircularProgress />;
+  const applyFilters = () => {
+    onFilterChange(localFilters);
+  };
+
   if (colorsError || manufacturersError) return <div>Error loading data</div>;
 
   return (
     <BoxStyled>
       <FormControl variant="outlined">
         <Typography variant="subtitle1">Color</Typography>
-        <Select value={filters.color || "All car colors"} onChange={handleColorChange}>
+        <Select value={localFilters.color || "All car colors"} onChange={handleColorChange}>
           {colorOptions.map((color, index) => (
             <MenuItem key={index} value={color}>
               {color}
@@ -48,7 +54,7 @@ export const Filter = ({ filters, onFilterChange }: FilterProps) => {
 
       <FormControl variant="outlined">
         <Typography variant="subtitle1">Manufacturer</Typography>
-        <Select value={filters.manufacturer || "All manufacturers"} onChange={handleManufacturerChange}>
+        <Select value={localFilters.manufacturer || "All manufacturers"} onChange={handleManufacturerChange}>
           {manufacturerOptions.map((manufacturer, index) => (
             <MenuItem key={index} value={manufacturer}>
               {manufacturer}
@@ -57,7 +63,7 @@ export const Filter = ({ filters, onFilterChange }: FilterProps) => {
         </Select>
       </FormControl>
 
-      <ButtonStyled variant="contained" onClick={() => onFilterChange(filters)}>
+      <ButtonStyled variant="contained" onClick={applyFilters}>
         Filter
       </ButtonStyled>
     </BoxStyled>

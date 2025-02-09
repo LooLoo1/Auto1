@@ -1,5 +1,5 @@
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom'
-import { Home, NotFound } from "pages"
+import { Home, CarDetails, NotFound } from "pages"
 import { MainLayout } from "layouts"
 
 export const App = () => {
@@ -8,7 +8,7 @@ export const App = () => {
       <Routes>
         <Route element={<MainLayout />}>
           <Route path="/" element={<Home/>} />
-          <Route path="/cars/:id" element={<div>2</div>} />
+          <Route path="/cars/:id" element={<CarDetails/>} />
           <Route path="*" element={<NotFound />} />
         </Route>
       </Routes>

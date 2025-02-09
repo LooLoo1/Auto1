@@ -3,7 +3,7 @@ import { Box, Button, Select, styled } from "@mui/material"
 export const BoxStyled = styled(Box)({
   display: "flex",
   flexDirection: "column",
-  width: "300px",
+  width: "30%",
   height: "fit-content",
   border: "2px solid #EDEDED",
   backgroundColor: "white",
