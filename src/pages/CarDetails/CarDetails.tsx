@@ -40,7 +40,7 @@ export const CarDetails = () => {
 
         <Box width={"40%"} sx={{ display: "flex", justifyContent: "center", flexDirection: "column", gap: 2, padding: 2, border: "2px solid #EDEDED" }}>
           <Typography variant="body1">If you like this car, click the button and save it in your collection of favourite items.</Typography>
-          <Button sx={{ width: "50%", alignSelf: "flex-end", color: "white", boxShadow: "none"   }} variant="contained" color="primary" onClick={() => alert("Saved to collection!")}>
+          <Button sx={{ width: "50%", alignSelf: "flex-end", color: "white", boxShadow: "none" }} variant="contained" color="primary" onClick={() => alert("Saved to collection!")}>
             Save
           </Button>
         </Box>
