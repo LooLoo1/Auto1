@@ -2,7 +2,7 @@
 This is a React project created using `create-react-app` for building interactive web applications.
 
 ## Demo 
-You can check out the live demo of the project here: [Live Demo](https://auto1-chi.vercel.app)
+You can check out the live demo of the project here: [Live Demo](https://auto1-bape.vercel.app)
 ## Getting Started
 To run this project locally, follow these steps:
 ### Prerequisites
